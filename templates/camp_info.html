@@ -1,0 +1,44 @@
+<!-- camp_info.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Camp Info</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function switchTab(index) {
+      const tabs = document.querySelectorAll('.camp-tab');
+      const contents = document.querySelectorAll('.camp-content');
+      tabs.forEach(tab => tab.classList.remove('border-b-2', 'border-green-500', 'font-bold'));
+      contents.forEach(content => content.classList.add('hidden'));
+      tabs[index].classList.add('border-b-2', 'border-green-500', 'font-bold');
+      contents[index].classList.remove('hidden');
+    }
+  </script>
+</head>
+<body class="bg-green-50 min-h-screen flex items-center justify-center p-6">
+  <div class="bg-white p-6 rounded shadow max-w-xl w-full">
+    <h2 class="text-xl font-semibold text-green-700 text-center mb-4">Submission Successful ✅</h2>
+    <p class="text-center mb-2">Thank you, <strong>{{ name }}</strong>!</p>
+    <p class="text-center mb-4">We've matched you with the nearest camps:</p>
+
+    <div class="flex justify-center space-x-4 mb-4">
+      {% for camp in camps %}
+        <button class="camp-tab px-4 py-1 text-sm border-b-2 border-transparent hover:border-green-500" onclick="switchTab({{ loop.index0 }})">
+          Camp {{ loop.index }}
+        </button>
+      {% endfor %}
+    </div>
+
+    {% for camp in camps %}
+      <div class="camp-content {{ 'hidden' if not loop.first else '' }} text-center bg-green-100 text-green-900 px-4 py-3 rounded">
+        {{ camp }}
+      </div>
+    {% endfor %}
+
+    <div class="mt-6 text-center">
+      <a href="/" class="text-blue-600 hover:underline">Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>
